@@ -110,3 +110,44 @@ def save():
     savetext=open(way,'w+')
     savetext.write(context)
     savetext.close()
+top=Tk()
+top.geometry('740x450')
+top['background']='peachpuff'
+top.title('lgm的文本编辑器')
+
+t=Text(top,undo=True,width=95,height=25,highlightcolor='red',highlightthickness=1,selectbackground='red',background='LightCyan')
+t.grid(row=0,column=0,columnspan=4)
+ybar=Scrollbar(top,orient=VERTICAL,width=16)
+ybar.config(command=t.yview )
+t.config(yscrollcommand=ybar.set)
+ybar.grid(row=0,column=4,sticky=NS)
+
+button1=Button(top,text='显示文本',command=opentext,background='orange').grid(row=1,column=0,padx=30)
+button2=Button(top,text='单词总数',background='orange',command=words).grid(row=1,column=1)
+button3=Button(top,text='全部单词词频',background='orange',command=wordsf).grid(row=1,column=2)
+button4=Button(top,text='关键词频统计',background='orange',command=keyword).grid(row=1,column=3)
+
+var=StringVar()
+statelabel=Label(top,textvariable=var,background='LightCyan').grid(row=3,column=0)
+def state(event):
+    location=t.index(CURRENT)
+    numlis=location.split('.')
+    num=int(numlis[1])+1
+    var.set('光标位置之前共有'+str(num)+'个字符')
+top.bind('<Button-1>',state)
+
+linkt=Text(top,height=1,width=10)
+linkt.grid(row=2,column=1,columnspan=2,pady=25)
+label=Label(top,text='此处超链接>',width=10,bg='lightcoral').grid(row=2,column=1)
+linkt.insert(1.0,'北航教务网')
+linkt.tag_add('link','1.0',END)
+linkt.tag_config('link',underline=True,foreground='blue')
+def over(event):
+    linkt.config(cursor='arrow')
+def click(event):
+    webbrowser.open('http://jiaowu.buaa.edu.cn/')
+linkt.tag_bind('link','<Enter>',over)    
+linkt.tag_bind('link','<Button-1>',click)
+
+img=PhotoImage(file='2019060320395547519.gif')
+imglabel=Label(top,image=img).grid(row=2,column=2)
