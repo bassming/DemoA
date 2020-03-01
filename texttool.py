@@ -151,3 +151,17 @@ linkt.tag_bind('link','<Button-1>',click)
 
 img=PhotoImage(file='2019060320395547519.gif')
 imglabel=Label(top,image=img).grid(row=2,column=2)
+
+menubar=Menu(top)
+c=[menu1,menu2,menu3]
+i=0
+filemenu=Menu(menubar)
+for item in ['查找','替换','删除']:
+    filemenu.add_command(label=item,command=c[i])
+    filemenu.add_separator()
+    i+=1
+menubar.add_cascade(label='工具',menu=filemenu)
+top['menu']=menubar
+menubar.add_command(label='撤销',command=back)
+menubar.add_command(label='保存',command=save)
+top.mainloop()
